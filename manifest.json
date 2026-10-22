@@ -1,0 +1,15 @@
+{
+  "name": "ZOHAIB Neon Calculator",
+  "short_name": "ZOHAIB",
+  "start_url": "/my-calculator/",
+  "display": "standalone",
+  "background_color": "#0f0c29",
+  "theme_color": "#00ff88",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/891/891175.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
