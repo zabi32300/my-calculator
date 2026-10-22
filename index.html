@@ -8,11 +8,30 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
 body{background:#0f0f0f;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:15px;}
-#welcome-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#00c853,#0091ea);display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:9999;animation: hideWelcome 2.5s forwards;}
-#welcome-screen h1{color:white;font-size:38px;letter-spacing:4px;animation: pop 1s ease;}
-#welcome-screen p{color:white;margin-top:10px;font-size:16px;letter-spacing:2px;opacity:0.9;}
-@keyframes pop{0%{transform:scale(0.5);opacity:0}100%{transform:scale(1);opacity:1}}
-@keyframes hideWelcome{0%,80%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+
+/* --- YEH WALA ANIMATION AAP WALI PIC JAISA HAI --- */
+#welcome-screen{
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:#121212;
+display:flex;justify-content:center;align-items:center;flex-direction:column;
+z-index:9999;
+animation: hideWelcome 2.8s forwards;
+}
+.logo-box{
+width:100px;height:100px;background:#ffb300;
+border-radius:22px;
+display:flex;justify-content:center;align-items:center;
+font-size:55px;font-weight:900;color:black;
+animation: pop 0.8s ease;
+box-shadow:0 0 30px rgba(255,179,0,0.3);
+}
+#welcome-screen h1{color:#ffb300;font-size:36px;letter-spacing:5px;margin-top:18px;font-weight:800;animation: fadeUp 0.8s ease 0.3s both;}
+#welcome-screen p{color:#8a8a8a;margin-top:12px;font-size:16px;letter-spacing:5px;animation: fadeUp 0.8s ease 0.6s both;}
+
+@keyframes pop{0%{transform:scale(0.3);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes fadeUp{0%{transform:translateY(15px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes hideWelcome{0%,75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+
 .calculator{background:#1e1e1e;width:100%;max-width:340px;border-radius:25px;padding:20px;box-shadow:0 15px 40px rgba(0,0,0,0.5);}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
 .top h2{color:#ffb300;font-size:18px;}
@@ -29,54 +48,47 @@ button{border:none;border-radius:15px;height:60px;font-size:20px;font-weight:bol
 </style>
 </head>
 <body>
-<div id="welcome-screen"><h1>Z</h1><h1>WELCOME</h1><p>Z CALC DEG</p></div>
+
+<div id="welcome-screen">
+<div class="logo-box">Z</div>
+<h1>WELCOME</h1>
+<p>Z CALC DEG</p>
+</div>
 
 <div class="calculator">
 <div class="top"><h2>Z CALC DEG</h2><div><button>HIST</button><button>SCI</button></div></div>
 <div class="display"><div id="history"></div><div id="result">0</div></div>
-
 <div class="buttons">
 <button class="btn-func" onclick="clearAll()">C</button>
 <button class="btn-func" onclick="del()">⌫</button>
 <button class="btn-func" onclick="add('%')">%</button>
 <button class="btn-func" onclick="add('/')">÷</button>
-
 <button class="btn-num" onclick="add('7')">7</button>
 <button class="btn-num" onclick="add('8')">8</button>
 <button class="btn-num" onclick="add('9')">9</button>
 <button class="btn-func" onclick="add('*')">×</button>
-
 <button class="btn-num" onclick="add('4')">4</button>
 <button class="btn-num" onclick="add('5')">5</button>
 <button class="btn-num" onclick="add('6')">6</button>
 <button class="btn-func" onclick="add('-')">-</button>
-
 <button class="btn-num" onclick="add('1')">1</button>
 <button class="btn-num" onclick="add('2')">2</button>
 <button class="btn-num" onclick="add('3')">3</button>
 <button class="btn-func" onclick="add('+')">+</button>
-
 <button class="btn-num" onclick="add('0')">0</button>
 <button class="btn-num" onclick="add('.')">.</button>
 <button class="btn-num" onclick="add('(')">(</button>
 <button class="btn-num" onclick="add(')')">)</button>
-
 <button class="btn-func" onclick="calc('sin')">sin</button>
 <button class="btn-func" onclick="calc('cos')">cos</button>
 <button class="btn-func" onclick="calc('tan')">tan</button>
 <button class="btn-eq" onclick="calculate()">=</button>
-
 <button class="btn-func" onclick="calc('sqrt')">√</button>
 <button class="btn-func" onclick="add('^')">^</button>
 <button class="btn-func" onclick="add('3.14159')">π</button>
 <button class="btn-func" onclick="add('2.71828')">e</button>
-
 <button class="btn-func" onclick="calc('log')">log</button>
-<button class="btn-num" style="opacity:0; pointer-events:none;">.</button>
-<button class="btn-num" style="opacity:0; pointer-events:none;">.</button>
-<button class="btn-num" style="opacity:0; pointer-events:none;">.</button>
 </div>
-
 <div class="made">Made By Zohaib</div>
 </div>
 
