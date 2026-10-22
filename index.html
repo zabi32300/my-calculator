@@ -1,10 +1,99 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Z Calculator</title><style>*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}body{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:12px}.calc{width:100%;max-width:390px;background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);border-radius:28px;border:1px solid rgba(255,255,255,0.15);padding:16px}.top{display:flex;justify-content:space-between;color:white}.display{background:rgba(0,0,0,0.45);border-radius:16px;padding:12px;margin:12px 0;text-align:right;min-height:80px}#result{color:white;font-size:32px;font-weight:600}#frac{color:#00ff88;font-size:12px;text-align:left}#mini{color:#a0a0c0;font-size:11px}.sci{display:none;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}.show .sci{display:grid}.sci button{height:40px;border:none;border-radius:10px;background:rgba(124,77,255,0.35);color:white}.basic{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.btn{height:56px;border:none;border-radius:14px;font-size:18px;font-weight:700}.clear{background:rgba(255,82,82,0.35);color:#ff8a8a}.gray{background:rgba(255,255,255,0.18);color:white}.op{background:#3a7bd5;color:white}.num{background:rgba(255,255,255,0.88)}.eq{background:linear-gradient(135deg,#00e5ff,#7c4dff);color:white;grid-column:span 2}.sd{background:orange!important;color:white!important}</style></head><body><div class="calc" id="c"><div class="top"><h2>Z CALC DEG</h2><div><button onclick="c.classList.toggle('show')">SCI</button></div></div><div class="display"><div id="frac"></div><div id="mini"></div><div id="result">0</div></div><div class="sci"><button onclick="A('sin(')">sin</button><button onclick="A('cos(')">cos</button><button onclick="A('tan(')">tan</button><button onclick="A('(')">(</button><button onclick="A(')')">)</button><button onclick="A('√(')">√</button><button onclick="A('π')">π</button><button onclick="A('^')">^</button></div><div class="basic"><button class="btn clear" onclick="C()">AC</button><button class="btn gray" onclick="B()">⌫</button><button class="btn sd" onclick="S()">S⇔D</button><button class="btn op" onclick="A('÷','/')">÷</button><button class="btn num" onclick="A('7','7')">7</button><button class="btn num" onclick="A('8','8')">8</button><button class="btn num" onclick="A('9','9')">9</button><button class="btn op" onclick="A('×','*')">×</button><button class="btn num" onclick="A('4','4')">4</button><button class="btn num" onclick="A('5','5')">5</button><button class="btn num" onclick="A('6','6')">6</button><button class="btn op" onclick="A('−','-')">−</button><button class="btn num" onclick="A('1','1')">1</button><button class="btn num" onclick="A('2','2')">2</button><button class="btn num" onclick="A('3','3')">3</button><button class="btn op" onclick="A('+','+')">+</button><button class="btn num" onclick="A('0','0')">0</button><button class="btn num" onclick="A('.','.')">.</button><button class="btn eq" onclick="K()">=</button></div></div><script>
-let d='',e='',ld=null,lf=null,sf=false;const r=document.getElementById('result'),m=document.getElementById('mini'),f=document.getElementById('frac');
-const dsin=x=>Math.sin(x*Math.PI/180),dcos=x=>Math.cos(x*Math.PI/180),dtan=x=>Math.tan(x*Math.PI/180),sqrt=Math.sqrt,log=x=>Math.log10(x),ln=x=>Math.log(x),PI=Math.PI;
-function frac(x){if(Math.abs(x-0.5)<1e-9)return"1/2";if(Math.abs(x-0.8660254)<1e-6)return"√3/2";if(Math.abs(x-0.7071067)<1e-6)return"√2/2";if(Math.abs(x-0.3333333)<1e-6)return"1/3";if(Math.abs(x-1)<1e-9)return"1";if(Math.abs(x-0)<1e-9)return"0";return null;}
-function A(a,b){b=b||a;d+=a;e+=b;m.textContent=d;r.textContent=d.slice(-15);f.textContent='';}
-function C(){d='';e='';m.textContent='';r.textContent='0';f.textContent='';ld=null;}
-function B(){d=d.slice(0,-1);e=e.slice(0,-1);m.textContent=d;r.textContent=d||'0';}
-function K(){try{let ev=e.replace(/√/g,'sqrt').replace(/π/g,'PI').replace(/÷/g,'/').replace(/×/g,'*').replace(/−/g,'-').replace(/\^/g,'**');let v=Function('dsin','dcos','dtan','sqrt','log','ln','PI','return ('+ev+')')(dsin,dcos,dtan,sqrt,log,ln,PI);v=Math.round(v*1e9)/1e9;ld=v;lf=frac(v);if(lf){r.textContent=lf;f.textContent="= "+v+" (S⇔D dabao)";sf=true;}else{r.textContent=v;f.textContent='';sf=false;}m.textContent=d+" = "+(lf||v);d=v.toString();e=d;}catch{r.textContent='Error';}}
-function S(){if(ld===null)return;if(sf){r.textContent=ld;f.textContent=lf;sf=false;}else{if(lf){r.textContent=lf;f.textContent="= "+ld;sf=true;}}}
-</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Z CALC DEG - Fixed</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+body{background:#1a1a2e;min-height:100vh;display:flex;justify-content:center;align-items:center}
+.calc{width:360px;background:#222;padding:15px;border-radius:20px}
+.top{color:white;display:flex;justify-content:space-between;margin-bottom:5px}
+.display{background:black;color:white;padding:15px;border-radius:10px;text-align:right;min-height:70px;margin:10px 0}
+#res{font-size:30px;word-break:break-all}#mini{font-size:11px;color:#aaa}#frac{font-size:11px;color:#0f0}
+.sci{display:none;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:10px}
+.show .sci{display:grid}
+.sci button{padding:10px;background:#444;color:white;border:none;border-radius:8px}
+.basic{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.btn{height:50px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
+.num{background:#eee}.op{background:orange;color:white}.clear{background:#ff4444;color:white}.eq{background:#00aaff;color:white;grid-column:span 2}.sd{background:#ff9800;color:white}
+</style>
+</head>
+<body>
+<div class="calc" id="calc">
+<div class="top"><h3>Z CALC DEG</h3><button onclick="document.getElementById('calc').classList.toggle('show')">SCI</button></div>
+<div class="display"><div id="frac"></div><div id="mini"></div><div id="res">0</div></div>
+<div class="sci">
+<button onclick="add('sin(')">sin</button>
+<button onclick="add('cos(')">cos</button>
+<button onclick="add('tan(')">tan</button>
+<button onclick="add('(')">(</button>
+<button onclick="add(')')">)</button>
+<button onclick="add('sqrt(')">√</button>
+<button onclick="add('PI')">π</button>
+<button onclick="add('^')">^</button>
+</div>
+<div class="basic">
+<button class="btn clear" onclick="clr()">AC</button>
+<button class="btn" onclick="bk()">⌫</button>
+<button class="btn sd" onclick="toggleSD()">S⇔D</button>
+<button class="btn op" onclick="add('/')">÷</button>
+<button class="btn num" onclick="add('7')">7</button>
+<button class="btn num" onclick="add('8')">8</button>
+<button class="btn num" onclick="add('9')">9</button>
+<button class="btn op" onclick="add('*')">×</button>
+<button class="btn num" onclick="add('4')">4</button>
+<button class="btn num" onclick="add('5')">5</button>
+<button class="btn num" onclick="add('6')">6</button>
+<button class="btn op" onclick="add('-')">−</button>
+<button class="btn num" onclick="add('1')">1</button>
+<button class="btn num" onclick="add('2')">2</button>
+<button class="btn num" onclick="add('3')">3</button>
+<button class="btn op" onclick="add('+')">+</button>
+<button class="btn num" onclick="add('0')">0</button>
+<button class="btn num" onclick="add('.')">.</button>
+<button class="btn eq" onclick="calc()">=</button>
+</div>
+</div>
+<script>
+let disp='', lastDec=null, lastFrac=null, showFrac=false;
+const res=document.getElementById('res'), mini=document.getElementById('mini'), fracEl=document.getElementById('frac');
+function toFrac(x){
+ if(Math.abs(x-0.5)<0.000001) return "1/2";
+ if(Math.abs(x+0.5)<0.000001) return "-1/2";
+ if(Math.abs(x-0.333333333)<0.0001) return "1/3";
+ if(Math.abs(x-0.866025403)<0.0001) return "√3/2";
+ if(Math.abs(x-0.707106781)<0.0001) return "√2/2";
+ if(Math.abs(x-0.866025403)<0.0001) return "0.866";
+ if(Math.abs(x-1)<0.000001) return "1";
+ if(Math.abs(x)<0.000001) return "0";
+ return null;
+}
+function add(t){ disp+=t; mini.textContent=disp; res.textContent=disp.slice(-14)||'0'; fracEl.textContent=''; }
+function clr(){ disp=''; res.textContent='0'; mini.textContent=''; fracEl.textContent=''; lastDec=null; }
+function bk(){ disp=disp.slice(0,-1); mini.textContent=disp; res.textContent=disp||'0'; }
+function calc(){
+ try{
+  let sin = x => Math.sin(x*Math.PI/180);
+  let cos = x => Math.cos(x*Math.PI/180);
+  let tan = x => Math.tan(x*Math.PI/180);
+  let sqrt = Math.sqrt;
+  let PI = Math.PI;
+  let ex = disp.replace(/\^/g,'**');
+  let v = eval(ex);
+  v = Math.round(v*1000000000)/1000000000;
+  lastDec=v; lastFrac=toFrac(v);
+  if(lastFrac){ res.textContent=lastFrac; fracEl.textContent='= '+v+' (S⇔D)'; showFrac=true; }
+  else{ res.textContent=v; fracEl.textContent=''; showFrac=false; }
+  mini.textContent=disp+' = '+(lastFrac||v);
+  disp=v.toString();
+ }catch(e){ res.textContent='Error'; console.log(e); }
+}
+function toggleSD(){
+ if(lastDec==null) return;
+ if(showFrac){ res.textContent=lastDec; fracEl.textContent=lastFrac; showFrac=false; }
+ else{ if(lastFrac){ res.textContent=lastFrac; fracEl.textContent='= '+lastDec; showFrac=true; } }
+}
+</script>
+</body>
+</html>
