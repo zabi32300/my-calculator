@@ -1,6 +1,6 @@
 {
-  "name": "ZOHAIB Neon Calculator",
-  "short_name": "ZOHAIB",
+  "name": "Z. Calculator",
+  "short_name": "Z. Calculator",
   "start_url": "/my-calculator/",
   "display": "standalone",
   "background_color": "#0f0c29",
