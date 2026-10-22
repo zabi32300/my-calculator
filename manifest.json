@@ -4,10 +4,10 @@
   "start_url": "/my-calculator/",
   "display": "standalone",
   "background_color": "#0f0c29",
-  "theme_color": "#00ff88",
+  "theme_color": "#7c4dff",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/891/891175.png",
+      "src": "icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
