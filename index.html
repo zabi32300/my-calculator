@@ -3,20 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Z. Calculator</title>
+<title>Z. Calculator - Degree Mode</title>
 <link rel="manifest" href="manifest.json">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
 body{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:12px}
 .calc{width:100%;max-width:390px;background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);border-radius:28px;border:1px solid rgba(255,255,255,0.15);padding:16px}
 .top{display:flex;justify-content:space-between;align-items:center;color:white}
-.top h2{font-size:18px;letter-spacing:1px}
+.top h2{font-size:18px}
 .top div button{background:rgba(255,255,255,0.12);border:none;color:white;padding:7px 12px;border-radius:10px;margin-left:5px;cursor:pointer}
 .display{background:rgba(0,0,0,0.45);border-radius:16px;padding:12px 15px;margin:12px 0;text-align:right;min-height:70px}
 #history-mini{color:#a0a0c0;font-size:12px;min-height:14px;word-break:break-all}
 #result{color:white;font-size:32px;font-weight:600;word-break:break-all}
 .history-panel{display:none;background:rgba(0,0,0,0.5);border-radius:12px;padding:8px;max-height:120px;overflow:auto;margin-bottom:10px;color:#ccc;font-size:12px}
-.history-panel div{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.08)}
 .sci-panel{display:none;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;padding:10px;background:rgba(124,77,255,0.15);border-radius:16px;border:1px solid rgba(124,77,255,0.2)}
 .show-sci .sci-panel{display:grid}
 .sci-panel button{height:42px;border:none;border-radius:10px;background:rgba(124,77,255,0.35);color:#d8ccff;font-weight:600;cursor:pointer}
@@ -28,64 +27,69 @@ body{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh
 .op{background:linear-gradient(135deg,#00d2ff,#3a7bd5);color:white}
 .num{background:rgba(255,255,255,0.88);color:#222}
 .eq{background:linear-gradient(135deg,#00e5ff,#7c4dff);color:white;grid-column:span 2}
+.mode-badge{font-size:10px;background:#00ff88;color:#000;padding:2px 6px;border-radius:6px;margin-left:6px;font-weight:800}
 </style>
 </head>
 <body>
 <div class="calc" id="calc">
-<div class="top"><h2>Z. CALCULATOR</h2><div><button onclick="toggleHistory()">🕓</button><button onclick="toggleSci()">SCI</button></div></div>
+<div class="top"><h2>Z. CALCULATOR <span class="mode-badge">DEG</span></h2><div><button onclick="toggleHistory()">🕓</button><button onclick="toggleSci()">SCI</button></div></div>
 <div class="display"><div id="history-mini"></div><div id="result">0</div></div>
 <div class="history-panel" id="historyPanel"></div>
 
-<!-- SCIENTIFIC EK SIDE / UPAR ALAG -->
 <div class="sci-panel">
-<button onclick="append('Math.sin(')">sin</button>
-<button onclick="append('Math.cos(')">cos</button>
-<button onclick="append('Math.tan(')">tan</button>
-<button onclick="append('Math.log10(')">log</button>
-<button onclick="append('Math.sqrt(')">√</button>
+<button onclick="append('dsin(')">sin</button>
+<button onclick="append('dcos(')">cos</button>
+<button onclick="append('dtan(')">tan</button>
+<button onclick="append('log10(')">log</button>
+<button onclick="append('sqrt(')">√</button>
 <button onclick="append('**2')">x²</button>
-<button onclick="append('Math.PI')">π</button>
+<button onclick="append('PI')">π</button>
 <button onclick="append('(')">(</button>
 <button onclick="append(')')">)</button>
-<button onclick="append('Math.log(')">ln</button>
-<button onclick="append('Math.E')">e</button>
+<button onclick="append('ln(')">ln</button>
+<button onclick="append('E')">e</button>
 <button onclick="append('**')">^</button>
 </div>
 
-<!-- NUMBERS EK JAGA ALAG -->
 <div class="basic-panel">
 <button class="btn clear" onclick="clearAll()">AC</button>
 <button class="btn gray" onclick="back()">⌫</button>
 <button class="btn gray" onclick="append('%')">%</button>
 <button class="btn op" onclick="append('/')">÷</button>
-
 <button class="btn num" onclick="append('7')">7</button>
 <button class="btn num" onclick="append('8')">8</button>
 <button class="btn num" onclick="append('9')">9</button>
 <button class="btn op" onclick="append('*')">×</button>
-
 <button class="btn num" onclick="append('4')">4</button>
 <button class="btn num" onclick="append('5')">5</button>
 <button class="btn num" onclick="append('6')">6</button>
 <button class="btn op" onclick="append('-')">−</button>
-
 <button class="btn num" onclick="append('1')">1</button>
 <button class="btn num" onclick="append('2')">2</button>
 <button class="btn num" onclick="append('3')">3</button>
 <button class="btn op" onclick="append('+')">+</button>
-
 <button class="btn num" onclick="append('0')">0</button>
 <button class="btn num" onclick="append('.')">.</button>
 <button class="btn eq" onclick="calculate()">=</button>
 </div>
 </div>
 <script>
+// DEGREE MODE FUNCTIONS - Asli Calculator jaisa
+const PI = Math.PI;
+const E = Math.E;
+const dsin = (x) => Math.sin(x * PI / 180);
+const dcos = (x) => Math.cos(x * PI / 180);
+const dtan = (x) => Math.tan(x * PI / 180);
+const sqrt = (x) => Math.sqrt(x);
+const log10 = (x) => Math.log10(x);
+const ln = (x) => Math.log(x);
+
 let expr=''; let hist=JSON.parse(localStorage.getItem('zHist')||'[]');
 const resEl=document.getElementById('result'); const mini=document.getElementById('history-mini'); const panel=document.getElementById('historyPanel');
 function append(v){ expr+=v; mini.textContent=expr; resEl.textContent=expr.slice(-18)||'0'; }
 function clearAll(){ expr=''; mini.textContent=''; resEl.textContent='0'; }
 function back(){ expr=expr.slice(0,-1); mini.textContent=expr; resEl.textContent=expr||'0'; }
-function calculate(){ try{ let e=expr.replace(/%/g,'/100'); let r=Function('"use strict";return ('+e+')')(); hist.unshift(expr+' = '+r); hist=hist.slice(0,20); localStorage.setItem('zHist',JSON.stringify(hist)); renderHist(); expr=r.toString(); mini.textContent=hist[0]; resEl.textContent=r; }catch{ resEl.textContent='Error'; } }
+function calculate(){ try{ let e=expr.replace(/%/g,'/100'); let r=Function('dsin','dcos','dtan','sqrt','log10','ln','PI','E','"use strict";return ('+e+')')(dsin,dcos,dtan,sqrt,log10,ln,PI,E); if(!isFinite(r)) throw 0; r = Math.round(r * 1000000000) / 1000000000; hist.unshift(expr+' = '+r); hist=hist.slice(0,20); localStorage.setItem('zHist',JSON.stringify(hist)); renderHist(); expr=r.toString(); mini.textContent=hist[0]; resEl.textContent=r; }catch{ resEl.textContent='Error'; } }
 function toggleSci(){ document.getElementById('calc').classList.toggle('show-sci'); }
 function toggleHistory(){ panel.style.display=panel.style.display=='block'?'none':'block'; renderHist(); }
 function renderHist(){ panel.innerHTML=hist.length?hist.map(h=>`<div onclick="useHist('${h.replace(/'/g,"\\'")}')">${h}</div>`).join(''):'<div>No history</div>'; }
