@@ -5,65 +5,69 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Z. Calculator</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#7c4dff">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:#0f0c29;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:15px}
-.calc{width:100%;max-width:380px;background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);border-radius:28px;border:1px solid rgba(255,255,255,0.15);padding:18px;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
-.top{display:flex;justify-content:space-between;align-items:center;color:white;margin-bottom:12px}
+body{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:12px}
+.calc{width:100%;max-width:390px;background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);border-radius:28px;border:1px solid rgba(255,255,255,0.15);padding:16px}
+.top{display:flex;justify-content:space-between;align-items:center;color:white}
 .top h2{font-size:18px;letter-spacing:1px}
-.top button{background:rgba(255,255,255,0.12);border:none;color:white;padding:8px 14px;border-radius:12px;cursor:pointer}
-.display{background:rgba(0,0,0,0.35);border-radius:18px;padding:15px;margin-bottom:15px;text-align:right;min-height:85px}
-#history-mini{color:#a0a0c0;font-size:14px;min-height:18px;word-break:break-all}
-#result{color:white;font-size:32px;font-weight:600;margin-top:5px;word-break:break-all}
-.history-panel{display:none;background:rgba(0,0,0,0.45);border-radius:14px;padding:10px;max-height:150px;overflow:auto;margin-bottom:12px;color:#ccc;font-size:13px}
-.history-panel div{padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08);cursor:pointer}
-.buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-button.btn{height:58px;border:none;border-radius:16px;font-size:18px;font-weight:600;cursor:pointer;transition:0.15s}
-.btn:active{transform:scale(0.92)}
-.num{background:rgba(255,255,255,0.12);color:white}
-.op{background:linear-gradient(135deg,#7c4dff,#00e5ff);color:white}
-.sci{background:rgba(124,77,255,0.25);color:#d1c5ff;font-size:15px;display:none}
-.show-sci .sci{display:block}
+.top div button{background:rgba(255,255,255,0.12);border:none;color:white;padding:7px 12px;border-radius:10px;margin-left:5px;cursor:pointer}
+.display{background:rgba(0,0,0,0.45);border-radius:16px;padding:12px 15px;margin:12px 0;text-align:right;min-height:70px}
+#history-mini{color:#a0a0c0;font-size:12px;min-height:14px;word-break:break-all}
+#result{color:white;font-size:32px;font-weight:600;word-break:break-all}
+.history-panel{display:none;background:rgba(0,0,0,0.5);border-radius:12px;padding:8px;max-height:120px;overflow:auto;margin-bottom:10px;color:#ccc;font-size:12px}
+.history-panel div{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.08)}
+.sci-panel{display:none;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;padding:10px;background:rgba(124,77,255,0.15);border-radius:16px;border:1px solid rgba(124,77,255,0.2)}
+.show-sci .sci-panel{display:grid}
+.sci-panel button{height:42px;border:none;border-radius:10px;background:rgba(124,77,255,0.35);color:#d8ccff;font-weight:600;cursor:pointer}
+.basic-panel{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.btn{height:56px;border:none;border-radius:14px;font-size:18px;font-weight:700;cursor:pointer}
+.btn:active{transform:scale(0.94)}
+.clear{background:rgba(255,82,82,0.35);color:#ff8a8a}
+.gray{background:rgba(255,255,255,0.18);color:white}
+.op{background:linear-gradient(135deg,#00d2ff,#3a7bd5);color:white}
+.num{background:rgba(255,255,255,0.88);color:#222}
 .eq{background:linear-gradient(135deg,#00e5ff,#7c4dff);color:white;grid-column:span 2}
-.clear{background:rgba(255,82,82,0.25);color:#ff8a8a}
 </style>
 </head>
 <body>
 <div class="calc" id="calc">
-<div class="top"><h2>Z. CALCULATOR</h2><div><button onclick="toggleHistory()">🕓</button> <button onclick="toggleSci()">SCI</button></div></div>
+<div class="top"><h2>Z. CALCULATOR</h2><div><button onclick="toggleHistory()">🕓</button><button onclick="toggleSci()">SCI</button></div></div>
 <div class="display"><div id="history-mini"></div><div id="result">0</div></div>
 <div class="history-panel" id="historyPanel"></div>
-<div class="buttons">
-<button class="btn clear" onclick="clearAll()">AC</button>
-<button class="btn num" onclick="back()">⌫</button>
-<button class="btn num" onclick="append('%')">%</button>
-<button class="btn op" onclick="append('/')">÷</button>
 
-<button class="btn sci" onclick="append('Math.sin(')">sin</button>
-<button class="btn sci" onclick="append('Math.cos(')">cos</button>
-<button class="btn sci" onclick="append('Math.tan(')">tan</button>
-<button class="btn sci" onclick="append('Math.log10(')">log</button>
+<!-- SCIENTIFIC EK SIDE / UPAR ALAG -->
+<div class="sci-panel">
+<button onclick="append('Math.sin(')">sin</button>
+<button onclick="append('Math.cos(')">cos</button>
+<button onclick="append('Math.tan(')">tan</button>
+<button onclick="append('Math.log10(')">log</button>
+<button onclick="append('Math.sqrt(')">√</button>
+<button onclick="append('**2')">x²</button>
+<button onclick="append('Math.PI')">π</button>
+<button onclick="append('(')">(</button>
+<button onclick="append(')')">)</button>
+<button onclick="append('Math.log(')">ln</button>
+<button onclick="append('Math.E')">e</button>
+<button onclick="append('**')">^</button>
+</div>
+
+<!-- NUMBERS EK JAGA ALAG -->
+<div class="basic-panel">
+<button class="btn clear" onclick="clearAll()">AC</button>
+<button class="btn gray" onclick="back()">⌫</button>
+<button class="btn gray" onclick="append('%')">%</button>
+<button class="btn op" onclick="append('/')">÷</button>
 
 <button class="btn num" onclick="append('7')">7</button>
 <button class="btn num" onclick="append('8')">8</button>
 <button class="btn num" onclick="append('9')">9</button>
 <button class="btn op" onclick="append('*')">×</button>
 
-<button class="btn sci" onclick="append('Math.sqrt(')">√</button>
-<button class="btn sci" onclick="append('**2')">x²</button>
-<button class="btn sci" onclick="append('Math.PI')">π</button>
-<button class="btn sci" onclick="append('(')">(</button>
-
 <button class="btn num" onclick="append('4')">4</button>
 <button class="btn num" onclick="append('5')">5</button>
 <button class="btn num" onclick="append('6')">6</button>
 <button class="btn op" onclick="append('-')">−</button>
-
-<button class="btn sci" onclick="append(')')">)</button>
-<button class="btn sci" onclick="append('Math.log(')">ln</button>
-<button class="btn sci" onclick="append('Math.E')">e</button>
-<button class="btn sci" onclick="append('**')">^</button>
 
 <button class="btn num" onclick="append('1')">1</button>
 <button class="btn num" onclick="append('2')">2</button>
@@ -78,10 +82,10 @@ button.btn{height:58px;border:none;border-radius:16px;font-size:18px;font-weight
 <script>
 let expr=''; let hist=JSON.parse(localStorage.getItem('zHist')||'[]');
 const resEl=document.getElementById('result'); const mini=document.getElementById('history-mini'); const panel=document.getElementById('historyPanel');
-function append(v){ if(resEl.textContent=='0'&&!isNaN(v)) expr=''; expr+=v; mini.textContent=expr; resEl.textContent=expr.slice(-18)||'0'; }
+function append(v){ expr+=v; mini.textContent=expr; resEl.textContent=expr.slice(-18)||'0'; }
 function clearAll(){ expr=''; mini.textContent=''; resEl.textContent='0'; }
 function back(){ expr=expr.slice(0,-1); mini.textContent=expr; resEl.textContent=expr||'0'; }
-function calculate(){ try{ let e=expr.replace(/%/g,'/100'); let r=Function('"use strict";return ('+e+')')(); if(!isFinite(r)) throw 0; hist.unshift(expr+' = '+r); hist=hist.slice(0,20); localStorage.setItem('zHist',JSON.stringify(hist)); renderHist(); expr=r.toString(); mini.textContent=hist[0]; resEl.textContent=r; }catch{ resEl.textContent='Error'; } }
+function calculate(){ try{ let e=expr.replace(/%/g,'/100'); let r=Function('"use strict";return ('+e+')')(); hist.unshift(expr+' = '+r); hist=hist.slice(0,20); localStorage.setItem('zHist',JSON.stringify(hist)); renderHist(); expr=r.toString(); mini.textContent=hist[0]; resEl.textContent=r; }catch{ resEl.textContent='Error'; } }
 function toggleSci(){ document.getElementById('calc').classList.toggle('show-sci'); }
 function toggleHistory(){ panel.style.display=panel.style.display=='block'?'none':'block'; renderHist(); }
 function renderHist(){ panel.innerHTML=hist.length?hist.map(h=>`<div onclick="useHist('${h.replace(/'/g,"\\'")}')">${h}</div>`).join(''):'<div>No history</div>'; }
