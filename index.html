@@ -3,103 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Z CALC DEG</title>
-<link rel="manifest" href="manifest.json">
+<title>Z CALC DEG - Made by Zohaib</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
-body{background:#0f0f0f;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:15px;}
-
-/* --- YEH WALA ANIMATION AAP WALI PIC JAISA HAI --- */
-#welcome-screen{
-position:fixed;top:0;left:0;width:100%;height:100%;
-background:#121212;
-display:flex;justify-content:center;align-items:center;flex-direction:column;
-z-index:9999;
-animation: hideWelcome 2.8s forwards;
-}
-.logo-box{
-width:100px;height:100px;background:#ffb300;
-border-radius:22px;
-display:flex;justify-content:center;align-items:center;
-font-size:55px;font-weight:900;color:black;
-animation: pop 0.8s ease;
-box-shadow:0 0 30px rgba(255,179,0,0.3);
-}
-#welcome-screen h1{color:#ffb300;font-size:36px;letter-spacing:5px;margin-top:18px;font-weight:800;animation: fadeUp 0.8s ease 0.3s both;}
-#welcome-screen p{color:#8a8a8a;margin-top:12px;font-size:16px;letter-spacing:5px;animation: fadeUp 0.8s ease 0.6s both;}
-
-@keyframes pop{0%{transform:scale(0.3);opacity:0}100%{transform:scale(1);opacity:1}}
-@keyframes fadeUp{0%{transform:translateY(15px);opacity:0}100%{transform:translateY(0);opacity:1}}
-@keyframes hideWelcome{0%,75%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
-
-.calculator{background:#1e1e1e;width:100%;max-width:340px;border-radius:25px;padding:20px;box-shadow:0 15px 40px rgba(0,0,0,0.5);}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
-.top h2{color:#ffb300;font-size:18px;}
-.top div button{background:#2d2d2d;color:white;border:none;padding:6px 14px;border-radius:20px;margin-left:5px;font-size:12px;}
-.display{background:#000;border-radius:15px;padding:15px;text-align:right;margin-bottom:15px;min-height:80px;word-break:break-all;}
-#result{color:white;font-size:34px;font-weight:bold;}
-#history{color:#888;font-size:14px;min-height:18px;}
-.buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-button{border:none;border-radius:15px;height:60px;font-size:20px;font-weight:bold;cursor:pointer;}
-.btn-num{background:#2d2d2d;color:white;}
-.btn-func{background:#2d2d2d;color:#ffb300;}
-.btn-eq{background:#ffb300;color:black;}
-.made{ text-align:right; color:#ffb300; font-size:11px; margin-top:15px; letter-spacing:1px; opacity:0.7; font-style:italic; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
+body{background:#121212;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:10px}
+.badge{position:fixed;top:12px;right:12px;background:#FFC107;color:#000;font-size:10px;padding:8px 14px;border-radius:20px;z-index:10000;font-weight:800}
+#welcome{position:fixed;inset:0;background:#121212;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;animation:hideW 0.8s ease 2.8s forwards}
+#welcome h1{font-size:2.5rem;color:#FFC107;text-align:center}
+#welcome p{color:#fff;margin-top:12px;letter-spacing:3px;font-size:12px;font-weight:800}
+#welcome .load{margin-top:20px;width:100px;height:3px;background:#333;border-radius:10px;overflow:hidden}
+#welcome .load div{height:100%;width:0%;background:#FFC107;animation:load 2.5s ease forwards}
+@keyframes load{to{width:100%}} @keyframes hideW{to{transform:translateY(-100%);opacity:0;visibility:hidden}}
+.calc{width:100%;max-width:360px;background:#2D2D2D;padding:18px;border-radius:24px;border:1px solid #3A3A3A}
+.top{display:flex;justify-content:space-between;margin-bottom:15px}
+.top h2{color:#FFC107;font-size:18px}
+.display{background:#1A1A1A;padding:14px 16px;border-radius:14px;min-height:80px;text-align:right}
+.display .expr{color:#888;font-size:13px;min-height:18px}
+.display .res{color:#FFF;font-size:32px;font-weight:800;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.grid button{height:56px;border:none;border-radius:14px;font-size:18px;font-weight:700;cursor:pointer}
+.btn-c{background:#3A3A3A;color:#FFC107} .btn-op{background:#3A3A3A;color:#FFC107}
+.btn-num{background:#4A4A4A;color:#FFF} .btn-func{background:#4A4A4A;color:#FFC107;font-size:15px}
+.btn-eq{background:#FFC107;color:#000;font-size:22px}
 </style>
 </head>
 <body>
-
-<div id="welcome-screen">
-<div class="logo-box">Z</div>
-<h1>WELCOME</h1>
-<p>Z CALC DEG</p>
-</div>
-
-<div class="calculator">
-<div class="top"><h2>Z CALC DEG</h2><div><button>HIST</button><button>SCI</button></div></div>
-<div class="display"><div id="history"></div><div id="result">0</div></div>
-<div class="buttons">
-<button class="btn-func" onclick="clearAll()">C</button>
-<button class="btn-func" onclick="del()">⌫</button>
-<button class="btn-func" onclick="add('%')">%</button>
-<button class="btn-func" onclick="add('/')">÷</button>
-<button class="btn-num" onclick="add('7')">7</button>
-<button class="btn-num" onclick="add('8')">8</button>
-<button class="btn-num" onclick="add('9')">9</button>
-<button class="btn-func" onclick="add('*')">×</button>
-<button class="btn-num" onclick="add('4')">4</button>
-<button class="btn-num" onclick="add('5')">5</button>
-<button class="btn-num" onclick="add('6')">6</button>
-<button class="btn-func" onclick="add('-')">-</button>
-<button class="btn-num" onclick="add('1')">1</button>
-<button class="btn-num" onclick="add('2')">2</button>
-<button class="btn-num" onclick="add('3')">3</button>
-<button class="btn-func" onclick="add('+')">+</button>
-<button class="btn-num" onclick="add('0')">0</button>
-<button class="btn-num" onclick="add('.')">.</button>
-<button class="btn-num" onclick="add('(')">(</button>
-<button class="btn-num" onclick="add(')')">)</button>
-<button class="btn-func" onclick="calc('sin')">sin</button>
-<button class="btn-func" onclick="calc('cos')">cos</button>
-<button class="btn-func" onclick="calc('tan')">tan</button>
+<div class="badge">MADE BY ZOHAIB</div>
+<div id="welcome"><h1>Z CALC DEG</h1><p>MADE BY ZOHAIB</p><div class="load"><div></div></div></div>
+<div class="calc">
+<div class="top"><h2>Z CALC DEG</h2></div>
+<div class="display"><div class="expr" id="expr"></div><div class="res" id="res">0</div></div>
+<div class="grid">
+<button class="btn-c" onclick="clearAll()">C</button>
+<button class="btn-c" onclick="del()">⌫</button>
+<button class="btn-op" onclick="append('%')">%</button>
+<button class="btn-op" onclick="append('/')">÷</button>
+<button class="btn-num" onclick="append('7')">7</button>
+<button class="btn-num" onclick="append('8')">8</button>
+<button class="btn-num" onclick="append('9')">9</button>
+<button class="btn-op" onclick="append('*')">×</button>
+<button class="btn-num" onclick="append('4')">4</button>
+<button class="btn-num" onclick="append('5')">5</button>
+<button class="btn-num" onclick="append('6')">6</button>
+<button class="btn-op" onclick="append('-')">-</button>
+<button class="btn-num" onclick="append('1')">1</button>
+<button class="btn-num" onclick="append('2')">2</button>
+<button class="btn-num" onclick="append('3')">3</button>
+<button class="btn-op" onclick="append('+')">+</button>
+<button class="btn-num" onclick="append('0')">0</button>
+<button class="btn-num" onclick="append('.')">.</button>
+<button class="btn-num" onclick="append('(')">(</button>
+<button class="btn-num" onclick="append(')')">)</button>
+<button class="btn-func" onclick="append('sin(')">sin</button>
+<button class="btn-func" onclick="append('cos(')">cos</button>
+<button class="btn-func" onclick="append('tan(')">tan</button>
 <button class="btn-eq" onclick="calculate()">=</button>
-<button class="btn-func" onclick="calc('sqrt')">√</button>
-<button class="btn-func" onclick="add('^')">^</button>
-<button class="btn-func" onclick="add('3.14159')">π</button>
-<button class="btn-func" onclick="add('2.71828')">e</button>
-<button class="btn-func" onclick="calc('log')">log</button>
 </div>
-<div class="made">Made By Zohaib</div>
 </div>
-
 <script>
-let expr='';
-function add(v){expr+=v;document.getElementById('result').innerText=expr;}
-function clearAll(){expr='';document.getElementById('result').innerText='0';document.getElementById('history').innerText='';}
-function del(){expr=expr.slice(0,-1);document.getElementById('result').innerText=expr||'0';}
-function calculate(){try{let e=expr.replace(/\^/g,'**');let res=eval(e);document.getElementById('history').innerText=expr+'=';document.getElementById('result').innerText=res;expr=res.toString();}catch{document.getElementById('result').innerText='Error';}}
-function calc(f){try{let val=eval(expr)||0;let rad=val*Math.PI/180;let r=0;if(f==='sin')r=Math.sin(rad);if(f==='cos')r=Math.cos(rad);if(f==='tan')r=Math.tan(rad);if(f==='sqrt')r=Math.sqrt(val);if(f==='log')r=Math.log10(val);document.getElementById('history').innerText=f+'('+val+')';document.getElementById('result').innerText=Number(r.toFixed(6));expr=r.toString();}catch{}}
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
+let exprEl=document.getElementById('expr'),resEl=document.getElementById('res'),currentExpr="";
+function append(val){
+ if(currentExpr==="0" && !isNaN(val)){currentExpr=val;}else{currentExpr+=val;}
+ exprEl.innerText=currentExpr;
+}
+function clearAll(){currentExpr="";exprEl.innerText="";resEl.innerText="0";}
+function del(){currentExpr=currentExpr.slice(0,-1);exprEl.innerText=currentExpr;if(!currentExpr)resEl.innerText="0";}
+function calculate(){
+ if(!currentExpr) return;
+ try{
+  let e=currentExpr;
+  e=e.replace(/sqrt\(/g,'Math.sqrt(');
+  e=e.replace(/sin\(/g,'Math.sin((Math.PI/180)*');
+  e=e.replace(/cos\(/g,'Math.cos((Math.PI/180)*');
+  e=e.replace(/tan\(/g,'Math.tan((Math.PI/180)*');
+  e=e.replace(/cot\(/g,'(1/Math.tan((Math.PI/180)*');
+  let result=Number(eval(e));
+  if(isNaN(result)) result=0;
+  result=parseFloat(result.toFixed(10));
+  resEl.innerText=result;
+  currentExpr="";
+ }catch{resEl.innerText="Error";}
+}
+setTimeout(()=>{let w=document.getElementById('welcome'); if(w) w.style.display='none'},3000);
 </script>
 </body>
 </html>
